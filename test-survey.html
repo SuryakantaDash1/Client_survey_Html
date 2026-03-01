@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Survey - Binary & Beyond Research</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      max-width: 700px;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 30px;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .header p {
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    .content {
+      padding: 40px;
+    }
+
+    .info-box {
+      background: #f0f4ff;
+      border-left: 4px solid #667eea;
+      padding: 15px;
+      margin-bottom: 30px;
+      border-radius: 4px;
+    }
+
+    .info-box p {
+      margin: 5px 0;
+      font-size: 13px;
+      color: #555;
+      word-break: break-all;
+    }
+
+    .info-box strong {
+      color: #333;
+    }
+
+    .question {
+      margin-bottom: 30px;
+    }
+
+    .question label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #333;
+      font-size: 16px;
+    }
+
+    .question input[type="text"],
+    .question select,
+    .question textarea {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #e0e0e0;
+      border-radius: 6px;
+      font-size: 14px;
+      transition: border-color 0.3s;
+    }
+
+    .question input[type="text"]:focus,
+    .question select:focus,
+    .question textarea:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .radio-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .radio-group label {
+      display: flex;
+      align-items: center;
+      font-weight: normal;
+      cursor: pointer;
+      padding: 10px;
+      border-radius: 6px;
+      transition: background 0.2s;
+    }
+
+    .radio-group label:hover {
+      background: #f5f5f5;
+    }
+
+    .radio-group input[type="radio"] {
+      margin-right: 10px;
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+
+    .actions {
+      margin-top: 40px;
+      padding-top: 30px;
+      border-top: 2px solid #f0f0f0;
+    }
+
+    .actions h3 {
+      margin-bottom: 20px;
+      color: #333;
+      font-size: 18px;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .btn {
+      padding: 15px 25px;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-align: center;
+      color: white;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .btn-complete {
+      background: linear-gradient(135deg, #4caf50, #2e7d32);
+    }
+
+    .btn-terminate {
+      background: linear-gradient(135deg, #f44336, #c62828);
+    }
+
+    .btn-quota {
+      background: linear-gradient(135deg, #ff9800, #e65100);
+    }
+
+    .btn-security {
+      background: linear-gradient(135deg, #9c27b0, #6a1b9a);
+    }
+
+    .error {
+      background: #ffebee;
+      color: #c62828;
+      padding: 15px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      border-left: 4px solid #c62828;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 20px;
+      background: #f9f9f9;
+      color: #666;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>📋 Test Survey</h1>
+      <p>Binary & Beyond Research - Survey Redirect System Testing</p>
+    </div>
+
+    <div class="content">
+      <div class="info-box" id="info-box">
+        <p><strong>Tracking ID:</strong> <span id="tracking-id">Not provided</span></p>
+        <p><strong>Return URL:</strong> <span id="return-url">Not provided</span></p>
+        <p><strong>User ID:</strong> <span id="user-id">Not provided</span></p>
+      </div>
+
+      <div id="error-message" class="error" style="display: none;">
+        ⚠️ Missing required parameters. Make sure you access this page via the entry URL.
+      </div>
+
+      <div class="question">
+        <label for="name">1. What is your name?</label>
+        <input type="text" id="name" placeholder="Enter your name">
+      </div>
+
+      <div class="question">
+        <label for="age">2. What is your age group?</label>
+        <select id="age">
+          <option value="">Select age group</option>
+          <option value="18-25">18-25</option>
+          <option value="26-35">26-35</option>
+          <option value="36-45">36-45</option>
+          <option value="46-60">46-60</option>
+          <option value="60+">60+</option>
+        </select>
+      </div>
+
+      <div class="question">
+        <label>3. How satisfied are you with our service?</label>
+        <div class="radio-group">
+          <label>
+            <input type="radio" name="satisfaction" value="very-satisfied">
+            Very Satisfied
+          </label>
+          <label>
+            <input type="radio" name="satisfaction" value="satisfied">
+            Satisfied
+          </label>
+          <label>
+            <input type="radio" name="satisfaction" value="neutral">
+            Neutral
+          </label>
+          <label>
+            <input type="radio" name="satisfaction" value="dissatisfied">
+            Dissatisfied
+          </label>
+          <label>
+            <input type="radio" name="satisfaction" value="very-dissatisfied">
+            Very Dissatisfied
+          </label>
+        </div>
+      </div>
+
+      <div class="actions">
+        <h3>🎯 Select Survey Exit Status:</h3>
+        <div class="buttons">
+          <button class="btn btn-complete" onclick="exitSurvey(1)">
+            ✅ Complete
+          </button>
+          <button class="btn btn-terminate" onclick="exitSurvey(2)">
+            ❌ Terminate
+          </button>
+          <button class="btn btn-quota" onclick="exitSurvey(3)">
+            📊 Quota Full
+          </button>
+          <button class="btn btn-security" onclick="exitSurvey(4)">
+            🔒 Security Term
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      &copy; 2026 Binary & Beyond Research | Test Survey Page
+    </div>
+  </div>
+
+  <script>
+    // Parse URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const trackingId = urlParams.get('tracking_id');
+    const returnUrl = urlParams.get('return_url');
+    const userId = urlParams.get('user_id');
+
+    // Display parameters
+    document.getElementById('tracking-id').textContent = trackingId || 'Not provided';
+    document.getElementById('return-url').textContent = returnUrl || 'Not provided';
+    document.getElementById('user-id').textContent = userId || 'Not provided';
+
+    // Show error if missing parameters
+    if (!trackingId || !returnUrl) {
+      document.getElementById('error-message').style.display = 'block';
+    }
+
+    function exitSurvey(status) {
+      if (!trackingId || !returnUrl) {
+        alert('⚠️ Cannot exit survey: Missing tracking_id or return_url\n\nPlease access this page via the vendor entry URL.');
+        return;
+      }
+
+      // Build exit URL
+      const exitUrl = `${returnUrl}?status=${status}&tracking_id=${trackingId}`;
+
+      console.log('Redirecting to:', exitUrl);
+
+      // Redirect to exit callback
+      window.location.href = exitUrl;
+    }
+
+    // Log all parameters on load
+    console.log('Test Survey Loaded');
+    console.log('Tracking ID:', trackingId);
+    console.log('Return URL:', returnUrl);
+    console.log('User ID:', userId);
+    console.log('All parameters:', Object.fromEntries(urlParams));
+  </script>
+</body>
+</html>
